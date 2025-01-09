@@ -1,6 +1,6 @@
 This project implements a simplified version of a volatility trading strategy that aims to capture the Volatility Risk Premium (VRP) in options markets. The code calculates the difference between implied volatility (what the market expects) and realized volatility (what actually happened), which traders often try to profit from when implied volatility is higher than realized. I included C++ calculations wrapped in Python, along with a basic backtesting framework to simulate trading results. 
 
-I was initially inspired by [this paper by Barclays]([url](https://amarketplaceofideas.com/wp-content/uploads/2021/08/Barclays_US_Equity_Derivatives_Strategy_Impact_of_Retail_Options_Trading.pdf));, and what they referred to as "Volscore". However, after running out of time, I had to descope it. Regardless, it was still a cool experience
+I was initially inspired by [this paper by Barclays]([url](https://amarketplaceofideas.com/wp-content/uploads/2021/08/Barclays_US_Equity_Derivatives_Strategy_Impact_of_Retail_Options_Trading.pdf)) (https://amarketplaceofideas.com/wp-content/uploads/2021/08/Barclays_US_Equity_Derivatives_Strategy_Impact_of_Retail_Options_Trading.pdf), and what they referred to as "Volscore". However, after running out of time, I had to descope it. Regardless, it was still a cool experience
 
 1) Implementation
 
