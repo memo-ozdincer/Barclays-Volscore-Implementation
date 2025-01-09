@@ -8,7 +8,7 @@ This repository contains a simplified end-to-end system to experiment with the �
 • A small machine learning hook illustrating how TensorFlow-based modeling could refine or “adjust” the VRP estimates.  
 • A minimal backtester showing how one might incorporate short vol strategies vs. equity exposures.
 
-The project was inspired by a [Barclay's paper](https://indices.cib.barclays/dms/Public%20marketing/Volatility_Risk_Premium.pdf) that discusses how the VRP can serve as a return source, sometimes outperforming equity market exposure under certain stress events (high concentration of retail investors). It references their internal "volscore" algorithm, and my code is a recreation of what I believe that could be. So far it does the following
+A lot of research by Hedge funds have been put forward that VRP can serve as a return source, sometimes outperforming equity market exposure under certain stress events (high concentration of retail investors). It references their internal "volscore" algorithm, and my code is a recreation of what I believe that could be. So far it does the following
 • Computing realized volatility.  
 • Computing implied volatility (e.g., from a proxy like VIX).  
 • Forming the difference as VRP.  
