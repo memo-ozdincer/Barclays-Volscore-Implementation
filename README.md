@@ -1,16 +1,20 @@
-This project implements a simplified version of a volatility trading strategy that aims to capture the Volatility Risk Premium (VRP) in options markets. The code calculates the difference between implied volatility (what the market expects) and realized volatility (what actually happened) with data from the Yahoo! Finance API. Traders often try to profit from this when implied volatility is higher than realized. I included C++ calculations wrapped in Python, along with a basic backtesting framework to simulate trading results. 
+This project implements a simplified version of Barclays' volatility trading strategy that aims to outperform traditional equity exposure by short vol strategies using the Volatility Risk Premium (VRP) in options markets. The code calculates the difference between implied volatility (what the market expects) and realized volatility (what actually happened) with data from the Yahoo Finance API. I included C++ calculations wrapped in Python, along with a basic backtesting framework to simulate trading results. 
 
-I was initially inspired by [this paper by Barclays]([url](https://amarketplaceofideas.com/wp-content/uploads/2021/08/Barclays_US_Equity_Derivatives_Strategy_Impact_of_Retail_Options_Trading.pdf)) (https://amarketplaceofideas.com/wp-content/uploads/2021/08/Barclays_US_Equity_Derivatives_Strategy_Impact_of_Retail_Options_Trading.pdf), and what they referred to as "Volscore". However, after running out of time, I had to descope the project to just a VRP strategy implemented in C++ and python. Regardless, it was still a cool experience
+I was initially inspired by [this paper by Barclays]([url](https://amarketplaceofideas.com/wp-content/uploads/2021/08/Barclays_US_Equity_Derivatives_Strategy_Impact_of_Retail_Options_Trading.pdf)) (https://amarketplaceofideas.com/wp-content/uploads/2021/08/Barclays_US_Equity_Derivatives_Strategy_Impact_of_Retail_Options_Trading.pdf), and what they referred to as "Volscore," which claimed to have (famously) beaten the new market with high retail investor participation. 
+
+The fundamental idea was that higher than expected far-OTM options activity could cause a huge discrepancy in IV and RV, which I implemented. However, their "volscore" model also incorporated downstream effects from this, which was the basis of their "beating the market" claims. Essentially, the dynamic was that far-OTM retail activity in and of itself is well-accounted for in the market. However, it would be met with hedge funds selling covered calls and puts, which, by nature, requires a huge amount of investment into the underlying equity by the institutional traders (given that short-term call/LEAP or "poor man's covered call" strategies were not popular with Hedge funds). So, this caused inefficiencies in options deltas that were just great enough for Barclays and other trading firms to take advantage. 
+
+So far, I implemented the additional increased far-OTM activity but not the downstream effects, and thought of doing so with deep learning in the future.
 
 1) Implementation
 
 #### 1.1. Introduction
 
-This repository contains a simplified end-to-end system to experiment with the “Volatility Risk Premium” (VRP) and how it might be integrated into an equity-centric portfolio. The project is primarily composed of:
-• A C++-based “VolScore” library (wrapped in Python via pybind11) to compute realized volatility metrics.  
-• A Python-based data pipeline and naive VRP computation.  
-• A small machine learning hook illustrating how TensorFlow-based modeling could refine or “adjust” the VRP estimates.  
-• A minimal backtester showing how one might incorporate short vol strategies vs. equity exposures.
+This repository contains a simplified end-to-end system to experiment with the “Volatility Risk Premium” (VRP) and how it might be integrated into an equity-centric portfolio, as outlined here (https://indices.cib.barclays/dms/Public%20marketing/Volatility_Risk_Premium.pdf). The project is primarily composed of:
+• A C++-based “VolScore” library (wrapped in Python via pybind11) to compute the given security's realized volatility metrics.  
+• A Python-based data pipeline and VRP calculations.  
+• A machine learning hook written for TensorFlow, where I plan to add a VRP "correction" model.
+• A simple backtester based on the second paper cited above, which shows how a short vol strategy can be implemented into a portfolio rather than equity exposures, including performance.
 
 A lot of research by Hedge funds have been put forward that VRP can serve as a return source, sometimes outperforming equity market exposure under certain stress events (high concentration of retail investors). It references their internal "volscore" algorithm, and my code is a recreation of what I believe that could be. So far it does the following
 • Computing realized volatility.  
