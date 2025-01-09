@@ -1,3 +1,7 @@
+This project implements a simplified version of a volatility trading strategy which looks at Volatility Risk Premium (VRP) in options markets. 
+
+I was initially inspired by this paper by Barclays: (https://amarketplaceofideas.com/wp-content/uploads/2021/08/Barclays_US_Equity_Derivatives_Strategy_Impact_of_Retail_Options_Trading.pdf). However, the market charecteristics such as considered in what they internally call "volscore" were not straightforward However, after running out of time, I had to descope the project to just a VRP based implementation in C++ and python, with future possibility for improvement, and also future possibility for ML correction, which I "pseudo" included in this version, as it can be seen in the comments.
+
 1) Implementation
 
 #### 1.1. Introduction
@@ -8,7 +12,7 @@ This repository contains a simplified end-to-end system to experiment with the �
 • A small machine learning hook illustrating how TensorFlow-based modeling could refine or “adjust” the VRP estimates.  
 • A minimal backtester showing how one might incorporate short vol strategies vs. equity exposures.
 
-It draws inspiration from a Barclays paper (https://indices.cib.barclays/dms/Public%20marketing/Volatility_Risk_Premium.pdf) that discusses how the VRP can serve as a return source, sometimes outperforming equity market exposure under certain stress events (high concentration of retail investors). Although the code is a little simplified, it highlights core steps such as:
+A lot of research by Hedge funds have been put forward that VRP can serve as a return source, sometimes outperforming equity market exposure under certain stress events (high concentration of retail investors). It references their internal "volscore" algorithm, and my code is a recreation of what I believe that could be. So far it does the following
 • Computing realized volatility.  
 • Computing implied volatility (e.g., from a proxy like VIX).  
 • Forming the difference as VRP.  
@@ -108,16 +112,14 @@ Check the console for final PnL or any rolling performance metrics.
 
 ### 2) Theory
 
-#### 2.1. Background (Inspired by the Barclays Document)
-
-This project was partly motivated by the concepts explained in the “Barclays Report.pdf,” which explores how an Equity Volatility Risk Premium (VRP) can sometimes be an effective alternative—or complement—to an outright equity position. The Barclays paper highlights:
+#### 2.1. Background
 
 • The VRP is the difference between implied volatility (often measured by an index like the VIX) and realized volatility. Historically, implied volatility tends to exceed subsequent realized volatility, leading to a so-called “premium.”  
 • This premium can be captured via short volatility strategies, e.g., short variance swaps or short ATM options.  
 • While VRP strategies often exhibit some positive correlation with equities (especially in crises), there are historical scenarios (e.g., burst of tech bubble or prolonged markets with persistently higher implied vol) in which VRP exposures can deliver strong risk-adjusted returns.  
 • The paper also discusses practical sizing in a multi-asset portfolio. Replacing a part of one’s equity allocation with short vol exposure can (depending on implementation) increase diversification benefits, reduce tail risks, and possibly boost Sharpe ratios.
 
-#### 2.2. Mathematical Underpinnings
+#### 2.2. Math
 
 Let’s say we track a daily closing price series S(t). Then:
 
@@ -129,14 +131,14 @@ Let’s say we track a daily closing price series S(t). Then:
 Hence VRP = ImpliedVol - RealizedVol (shown in volatility points).  
 A short volatility strategy attempts to, on average, pocket the implied minus realized difference.  
 
-#### 2.3. Machine Learning Angle
+#### 2.3. Machine Learning Possible usage
 
 We can refine VRP forecasts. For example, let x(t) be a feature vector capturing phenomenon such as:
 • Momentum or macro environment (e.g., market “fear”).  
 • Historical realized vol and prior implied vol terms.  
 • Other exogenous signals (yield curve slopes, credit spreads, etc.).  
 
-One could train an LSTM or feed-forward model y = f(x) to predict future realized volatility or directly predict VRP. Then the strategy might short volatility more aggressively when the predicted VRP is high, or hold less exposure when the predicted VRP is low. This approach merges VRP with data-driven modeling to better handle regime shifts.
+I started this project thinking I would train an LSTM or feed-forward model y = f(x) to predict future realized volatility or directly predict VRP. Then the strategy might short volatility more aggressively when the predicted VRP is high, or hold less exposure when the predicted VRP is low. This approach merges VRP with data-driven modeling to better handle regime shifts. However, I lost interest in the project after spending my winter break on it.
 
 #### 2.4. Potential Limitations
 
