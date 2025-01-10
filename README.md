@@ -1,16 +1,20 @@
-This project implements a simplified version of a volatility trading strategy which looks at Volatility Risk Premium (VRP) in options markets. 
+This project implements a simplified version of Barclays' volatility trading strategy that aims to outperform traditional equity exposure by short vol strategies using the Volatility Risk Premium (VRP) in options markets.
 
-I was initially inspired by this paper by Barclays: (https://amarketplaceofideas.com/wp-content/uploads/2021/08/Barclays_US_Equity_Derivatives_Strategy_Impact_of_Retail_Options_Trading.pdf). However, the market charecteristics such as considered in what they internally call "volscore" were not straightforward However, after running out of time, I had to descope the project to just a VRP based implementation in C++ and python, with future possibility for improvement, and also future possibility for ML correction, which I "pseudo" included in this version, as it can be seen in the comments.
+https://amarketplaceofideas.com/wp-content/uploads/2021/08/Barclays_US_Equity_Derivatives_Strategy_Impact_of_Retail_Options_Trading.pdf
+
+The fundamental idea was that higher than expected far-OTM options activity could initially cause a discrepancy in IV and RV. However, their "volscore" model was more concerned with the downstream effects from this, caused by firms using covered calls to supply the short-expiry far-OTM calls to the retail market. Essentially, far-OTM retail activity is easy to account for in the market; however, the huge amount of additional exposure to the underlying security taken on by hedge funds selling these far-OTM covered calls was unexpected, especially with such short expiration dates. This, in theory causes unexpected movements in options markets (even supposedly in the LEAPs, as I guess a lot of people were selling "poor mamn's cobvered calls"). So, all of this caused inefficiencies in options deltas that were just great enough for Barclays and other trading firms to take advantage. In their paper, they say their proprietary model could account for it, and I was really interested to see how this could be done, which led me to this implementation.
+
+So far, I implemented the additional increased far-OTM activity but not the downstream effects, and thought of doing so with deep learning in the future.
 
 1) Implementation
 
 #### 1.1. Introduction
 
-This repository contains a simplified end-to-end system to experiment with the “Volatility Risk Premium” (VRP) and how it might be integrated into an equity-centric portfolio. The project is primarily composed of:
-• A C++-based “VolScore” library (wrapped in Python via pybind11) to compute realized volatility metrics.  
-• A Python-based data pipeline and naive VRP computation.  
-• A small machine learning hook illustrating how TensorFlow-based modeling could refine or “adjust” the VRP estimates.  
-• A minimal backtester showing how one might incorporate short vol strategies vs. equity exposures.
+This repository contains a simplified end-to-end system to experiment with the “Volatility Risk Premium” (VRP) and how it might be integrated into an equity-centric portfolio, as outlined here (https://indices.cib.barclays/dms/Public%20marketing/Volatility_Risk_Premium.pdf). The project is primarily composed of:
+• A C++-based “VolScore” library (wrapped in Python via pybind11) to compute the given security's realized volatility metrics.  
+• A Python-based data pipeline and VRP calculations.  
+• A machine learning hook written for TensorFlow, where I plan to add a VRP "correction" model.
+• A simple backtester based on the second paper cited above, which shows how a short vol strategy can be implemented into a portfolio rather than equity exposures, including performance.
 
 A lot of research by Hedge funds have been put forward that VRP can serve as a return source, sometimes outperforming equity market exposure under certain stress events (high concentration of retail investors). It references their internal "volscore" algorithm, and my code is a recreation of what I believe that could be. So far it does the following
 • Computing realized volatility.  
