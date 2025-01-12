@@ -4,7 +4,7 @@ https://amarketplaceofideas.com/wp-content/uploads/2021/08/Barclays_US_Equity_De
 
 The fundamental idea was that higher than expected far-OTM options activity could initially cause a discrepancy in IV and RV. However, their "volscore" model was more concerned with the downstream effects from this, caused by firms using covered calls to supply the short-expiry far-OTM calls to the retail market. Essentially, far-OTM retail activity is easy to account for in the market; however, the huge amount of additional exposure to the underlying security taken on by hedge funds selling these far-OTM covered calls was unexpected, especially with such short expiration dates. This, in theory causes unexpected movements in options markets (even supposedly in the LEAPs, as I guess a lot of people were selling "poor mamn's cobvered calls"). So, all of this caused inefficiencies in options deltas that were just great enough for Barclays and other trading firms to take advantage. In their paper, they say their proprietary model could account for it, and I was really interested to see how this could be done, which led me to this implementation.
 
-So far, I implemented the additional increased far-OTM activity but not the downstream effects, and thought of doing so with deep learning in the future.
+So far, I implemented the additional increased retail activity but not the downstream effects, and thought of doing so with deep learning in the future.
 
 1) Implementation
 
